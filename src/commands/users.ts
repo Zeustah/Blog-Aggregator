@@ -1,4 +1,8 @@
-import { createUser, getUserByName } from "src/lib/db/queries/users";
+import {
+  createUser,
+  deleteUser,
+  getUserByName,
+} from "src/lib/db/queries/users";
 import { CommandHandler } from "./commands";
 import { setUser } from "src/config";
 
@@ -24,5 +28,15 @@ export async function register(cmdName: string, ...args: string[]) {
     const newUser = await createUser(name);
     setUser(name);
     console.log(`${name} has been registered.`, newUser);
+  }
+}
+
+export async function reset(cmdName: string) {
+  try {
+    await deleteUser();
+    console.log("Users table has been reset.");
+  } catch (err) {
+    console.error("Failed to reset Users table:", err);
+    process.exit(1);
   }
 }

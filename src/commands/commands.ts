@@ -1,8 +1,11 @@
-export type CommandHandler = (cmdName: string, ...args: string[]) => void;
+export type CommandHandler = (
+  cmdName: string,
+  ...args: string[]
+) => Promise<void>;
 
 export type CommandsRegistry = Record<string, CommandHandler>;
 
-export function registerCommand(
+export async function registerCommand(
   registry: CommandsRegistry,
   cmdName: string,
   handler: CommandHandler,
@@ -10,14 +13,14 @@ export function registerCommand(
   registry[cmdName] = handler;
 }
 
-export function runCommand(
+export async function runCommand(
   registry: CommandsRegistry,
   cmdName: string,
   ...args: string[]
-) {
+): Promise<void> {
   if (!registry[cmdName]) {
     throw new Error("Command does not exist.");
   }
   const handler = registry[cmdName];
-  handler(cmdName, ...args);
+  await handler(cmdName, ...args);
 }

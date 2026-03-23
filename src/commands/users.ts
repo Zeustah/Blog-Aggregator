@@ -2,9 +2,10 @@ import {
   createUser,
   deleteUser,
   getUserByName,
+  getUsers,
 } from "src/lib/db/queries/users";
 import { CommandHandler } from "./commands";
-import { setUser } from "src/config";
+import { readConfig, setUser } from "src/config";
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length !== 1) {
@@ -14,7 +15,7 @@ export async function handlerLogin(cmdName: string, ...args: string[]) {
     throw new Error("User does not exist.");
   }
   setUser(args[0]);
-  console.log("New username has been set.");
+  console.log(`Logged in as ${args[0]}.`);
 }
 
 export async function register(cmdName: string, ...args: string[]) {
@@ -38,5 +39,15 @@ export async function reset(cmdName: string) {
   } catch (err) {
     console.error("Failed to reset Users table:", err);
     process.exit(1);
+  }
+}
+
+export async function users(cmdName: string) {
+  for (const users of await getUsers()) {
+    if (users.name === readConfig().currentUserName) {
+      console.log(`* ${users.name} (current)`);
+    } else {
+      console.log(`* ${users.name}`);
+    }
   }
 }

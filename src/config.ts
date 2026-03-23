@@ -23,7 +23,7 @@ function validateConfig(rawConfig: any): Config {
   }
   const jsonConfig: Config = {
     dbUrl: rawConfig.db_url,
-    currentUserName: rawConfig.currentUserName || "",
+    currentUserName: rawConfig.current_user_name || "",
   };
   return jsonConfig;
 }

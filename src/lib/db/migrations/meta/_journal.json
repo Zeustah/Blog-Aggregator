@@ -15,6 +15,13 @@
       "when": 1774875427810,
       "tag": "0001_magical_firebrand",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775134116500,
+      "tag": "0002_fantastic_iron_lad",
+      "breakpoints": true
     }
   ]
 }
